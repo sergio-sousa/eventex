@@ -8,6 +8,7 @@ class SubscribeTest(TestCase):
     def test_get(self):
         """get /inscricao/ must return status code 200"""
         self.assertEqual(200, self.resp.status_code)
+        
 
     def test_template(self):
         """Must use template subscriptions/subscription_form.html"""
