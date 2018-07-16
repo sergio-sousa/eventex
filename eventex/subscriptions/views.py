@@ -21,7 +21,7 @@ def subscribe(request):
                         ['contato@eventex.com.br', 'henrique@bastos.com.br'])
             # form.cleaned_data['email']
 
-            messages.success(request,'Inscrição realizada com sucesso!')
+            messages.success(request,'Inscrição realizada com sucesso!' )
 
             return HttpResponseRedirect('/inscricao/')
             
