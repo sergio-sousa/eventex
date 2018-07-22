@@ -1,41 +1,40 @@
+from django.conf import settings
 from django.contrib import messages
 from django.core import mail
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from eventex.subscriptions.forms import SubscriptionForm  
+from eventex.subscriptions.forms import SubscriptionForm
 
 
 def subscribe(request):
     if request.method == "POST":
+        return create(request)
+    else:
+        return new(request)
 
-        form = SubscriptionForm(request.POST)
-        
-        if form.is_valid():
 
-            body = render_to_string('subscriptions/subscription_email.txt', 
-                                    form.cleaned_data)
-            mail.send_mail('Confirmação de inscrição',
-                        body,
-                        'contato@eventex.com.br',
-                        ['contato@eventex.com.br', 'henrique@bastos.com.br'])
-            # form.cleaned_data['email']
-
-            messages.success(request,'Inscrição realizada com sucesso!' )
-
-            return HttpResponseRedirect('/inscricao/')
-            
-        else:
-            return render(request, 'subscriptions/subscription_form.html', 
+def create(request):
+    form = SubscriptionForm(request.POST)
+    if not form.is_valid():
+        return render(request, 'subscriptions/subscription_form.html',
                           {'form': form})
 
+    _send_mail('Confirmação de inscrição', 
+                settings.DEFAULT_FROM_EMAIL, 
+                'henrique@bastos.com.br', 
+                'subscriptions/subscription_email.txt',
+                form.cleaned_data)
+    
+    messages.success(request, 'Inscrição realizada com sucesso!')
+    
+    return HttpResponseRedirect('/inscricao/')
+    
+def new(request):
+    """method GET"""
+    return render(request, 'subscriptions/subscription_form.html',
+                    {'form':  SubscriptionForm()})
 
-    else:
-        """method GET"""
-        context = {'form':  SubscriptionForm()}
-        return render(request, 'subscriptions/subscription_form.html', context)
-
-
-
-
-
+def _send_mail(subject, from_, to, template_name, context):
+        body = render_to_string(template_name, context)
+        mail.send_mail(subject, body, from_, [from_, to])
