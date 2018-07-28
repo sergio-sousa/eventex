@@ -6,7 +6,7 @@ class SubscribePostValid(TestCase):
     def setUp(self):
         """valild POST should redirect to /inscricao/"""
         data = dict(name='Henrique Bastos', cpf = '12345678901', 
-                    email='henrique@bastos.net',phone='21-99618-6180')
+                    email='henrique@bastos.com.br',phone='21-99618-6180')
         self.resp = self.client.post('/inscricao/', data)
         self.email = mail.outbox[0]
     
@@ -22,14 +22,13 @@ class SubscribePostValid(TestCase):
 
     def test_subscrition_email_to(self):
         expect = ['contato@eventex.com.br', 'henrique@bastos.com.br']
-
         self.assertEqual(expect, self.email.to)
 
     def test_subscrition_email_body(self):
         contents = [
             'Henrique Bastos',
             '12345678901',
-            'henrique@bastos.net',
+            'henrique@bastos.com.br',
             '21-99618-6180',
         ]
         for content in contents:
