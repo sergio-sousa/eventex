@@ -6,14 +6,20 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from eventex.subscriptions.forms import SubscriptionForm
 from eventex.subscriptions.models import Subscription
+from django.shortcuts import resolve_url as r
 
 
-
-def subscribe(request):
+def new(request):
     if request.method == "POST":
         return create(request)
-    else:
-        return new(request)
+    
+    return empty_form(request)
+
+
+def empty_form(request):
+    """method GET"""
+    return render(request, 'subscriptions/subscription_form.html',
+                    {'form':  SubscriptionForm()})
 
 
 def create(request):
@@ -30,12 +36,8 @@ def create(request):
                 'subscriptions/subscription_email.txt',
                 {'subscription':subscription})
 
-    return HttpResponseRedirect('/inscricao/{}/'.format(subscription.pk))
-    
-def new(request):
-    """method GET"""
-    return render(request, 'subscriptions/subscription_form.html',
-                    {'form':  SubscriptionForm()})
+    return HttpResponseRedirect(r('subscriptions:detail', subscription.pk))
+ 
 
 def detail(request, pk):
     try:
@@ -45,8 +47,7 @@ def detail(request, pk):
     
     return render(request, 'subscriptions/subscription_detail.html',
                   {'subscription': subscription})
-    
-        
+       
 def _send_mail(subject, from_, to, template_name, context):
         body = render_to_string(template_name, context)
         mail.send_mail(subject, body, from_, [from_, to])
