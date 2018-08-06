@@ -1,8 +1,9 @@
 from django.test import TestCase
-from unittest.mock import Mock, patch, call
+from unittest.mock import Mock
 from eventex.subscriptions.admin import SubscriptionModelAdmin
 from eventex.subscriptions.admin import Subscription
 from eventex.subscriptions.admin import admin
+
 
 class SubscriptionModelAdminTest(TestCase):
     def setUp(self):
@@ -24,9 +25,7 @@ class SubscriptionModelAdminTest(TestCase):
     def test_message(self):
         """it should send a message to the user. """
         mock = self.call_action()
-
         mock.assert_called_once_with(None, '1 Inscrição foi marcada como paga.')
-
 
     def call_action(self):
         queryset = Subscription.objects.all()
