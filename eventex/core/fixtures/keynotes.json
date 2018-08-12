@@ -1,0 +1,24 @@
+[
+{
+    "model": "core.speaker",
+    "pk": 1,
+    "fields": {
+        "name": "Grace Hopper",
+        "slug": "grace-hopper",
+        "photo": "http://hbn.link/hopper-pic",
+        "website": "http://hbn.link/hopper-site",
+        "description": "Programadora e Almirante."
+    }
+},
+{
+    "model": "core.speaker",
+    "pk": 2,
+    "fields": {
+        "name": "Alan Turing",
+        "slug": "alan-turing",
+        "photo": "http://hbn.link/turing-pic",
+        "website": "http://hbn.link/turing-site",
+        "description": "Matem\u00e1tico e decifrador de c\u00f3digo.\r\n\r\nAp\u00f3s a guerra, trabalhou no Laborat\u00f3rio Nacional de F\u00edsica do Reino Unido, onde criou um dos primeiros projetos para um computador com um programa armazenado, o ACE. Posteriormente, Turing se interessou pela qu\u00edmica. Escreveu um artigo sobre a base qu\u00edmica da morfog\u00eanese[5] e previu rea\u00e7\u00f5es qu\u00edmicas oscilantes como a Rea\u00e7\u00e3o de Belousov-Zhabotinsky, que foram observadas pela primeira vez na d\u00e9cada de 1960."
+    }
+}
+]
