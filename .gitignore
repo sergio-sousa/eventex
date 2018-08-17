@@ -1,4 +1,3 @@
-.env
 .idea
 .wttd
 *.sqlite3
